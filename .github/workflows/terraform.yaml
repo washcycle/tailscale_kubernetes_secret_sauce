@@ -23,7 +23,12 @@ jobs:
               terraform_version: 1.10.5
 
         - name: Initialize Terraform
-          run: terraform init
+          run: terraform init -input=false
+
+        - name: Terraform Validate
+          id: validate
+          run: terraform validate -no-color
 
         - name: Terraform Plan
-          run: terraform plan
+          id: plan
+          run: terraform plan -input=false -no-color
