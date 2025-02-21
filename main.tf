@@ -50,6 +50,7 @@ resource "helm_release" "tailscale_operator" {
 }
 
 resource "kubernetes_cluster_role_binding" "tailnet_readers_view" {
+  depends_on = [ helm_release.tailscale_operator ]
   metadata {
     name = "tailnet-readers-view"
   }
@@ -67,17 +68,4 @@ resource "kubernetes_cluster_role_binding" "tailnet_readers_view" {
   }
 }
 
-resource "kubernetes_manifest" "ts_proxies" {
-  depends_on = [helm_release.tailscale_operator]
-  manifest = {
-    apiVersion = "tailscale.com/v1alpha1"
-    kind       = "ProxyGroup"
-    metadata = {
-      name = "ts-proxies"
-    }
-    spec = {
-      type     = "egress"
-      replicas = 3
-    }
-  }
-}
+
