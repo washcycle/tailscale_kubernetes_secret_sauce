@@ -18,9 +18,9 @@ jobs:
                 driver: 'docker'
 
         - name: Set up Terraform
-          uses: hashicorp/setup-terraform@v1
+          uses: hashicorp/setup-terraform@v3.1.2
           with:
-              terraform_version: 1.0.0
+              terraform_version: 1.10.5
 
         - name: Initialize Terraform
           run: terraform init
