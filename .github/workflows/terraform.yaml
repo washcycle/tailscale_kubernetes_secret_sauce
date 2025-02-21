@@ -1,0 +1,29 @@
+name: Terraform Plan
+
+on: [push]
+
+jobs:
+    terraform-plan:
+        runs-on: ubuntu-latest
+
+        steps:
+        - name: Checkout repository
+          uses: actions/checkout@v4
+
+        - name: Set up Minikube
+          uses: manusa/actions-setup-minikube@v2.13.1
+          with:
+                minikube version: 'v1.35.0'
+                kubernetes version: 'v1.32.0'
+                driver: 'docker'
+
+        - name: Set up Terraform
+          uses: hashicorp/setup-terraform@v1
+          with:
+              terraform_version: 1.0.0
+
+        - name: Initialize Terraform
+          run: terraform init
+
+        - name: Terraform Plan
+          run: terraform plan
