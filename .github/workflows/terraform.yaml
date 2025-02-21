@@ -4,7 +4,7 @@ on: [push]
 
 env:
   TF_VAR_oauth_client_secret: "dummysecret"
-  TF__VAR_oauth_client_id: "dummyclientid"
+  TF_VAR_oauth_client_id: "dummyclientid"
 
 jobs:
     terraform-plan:
