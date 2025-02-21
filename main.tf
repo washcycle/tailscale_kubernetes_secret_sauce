@@ -22,6 +22,10 @@ resource "helm_release" "tailscale_operator" {
   version          = "1.80.0"
   create_namespace = false
 
+  set {
+    name  = "operatorConfig.hostname"
+    value = "heero-yuy"
+  }
 
   set {
     name  = "namespace"
@@ -40,7 +44,8 @@ resource "helm_release" "tailscale_operator" {
 
   set {
     name  = "apiServerProxyConfig.mode"
-    value = true
+    value = "true"
+    type  = "string"
   }
 }
 
@@ -63,6 +68,7 @@ resource "kubernetes_cluster_role_binding" "tailnet_readers_view" {
 }
 
 resource "kubernetes_manifest" "ts_proxies" {
+  depends_on = [helm_release.tailscale_operator]
   manifest = {
     apiVersion = "tailscale.com/v1alpha1"
     kind       = "ProxyGroup"
