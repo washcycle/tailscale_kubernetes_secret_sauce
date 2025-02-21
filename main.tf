@@ -42,7 +42,6 @@ resource "helm_release" "tailscale_operator" {
     name  = "apiServerProxyConfig.mode"
     value = true
   }
-
 }
 
 resource "kubernetes_cluster_role_binding" "tailnet_readers_view" {
