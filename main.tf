@@ -62,3 +62,17 @@ resource "kubernetes_cluster_role_binding" "tailnet_readers_view" {
     api_group = "rbac.authorization.k8s.io"
   }
 }
+
+resource "kubernetes_manifest" "ts_proxies" {
+  manifest = {
+    apiVersion = "tailscale.com/v1alpha1"
+    kind       = "ProxyGroup"
+    metadata = {
+      name = "ts-proxies"
+    }
+    spec = {
+      type     = "egress"
+      replicas = 3
+    }
+  }
+}
