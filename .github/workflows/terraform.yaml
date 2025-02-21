@@ -14,7 +14,7 @@ jobs:
         - name: Checkout repository
           uses: actions/checkout@v4
 
-        - name:
+        - name: Set up Minikube
           uses: medyagh/setup-minikube@latest
 
         - name: Set up Terraform
