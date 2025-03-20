@@ -41,3 +41,50 @@ resource "kubernetes_deployment" "nginx" {
   }
 }
 
+resource "kubernetes_service" "nginx" {
+  metadata {
+    name      = "nginx"
+    namespace = kubernetes_namespace.dev.metadata[0].name
+  }
+
+  spec {
+    selector = {
+      app = "nginx"
+    }
+
+    port {
+      port        = 80
+      target_port = "http"
+    }
+  }
+}
+
+resource "kubernetes_ingress_v1" "nginx" {
+  metadata {
+    name      = "nginx"
+    namespace = kubernetes_namespace.dev.metadata[0].name
+  }
+
+  spec {
+    ingress_class_name = "tailscale"
+    tls {
+      hosts = ["nginx"]
+    }
+    rule {
+      http {
+        path {
+          path = "/"
+
+          backend {
+            service {
+              name = kubernetes_service.nginx.metadata[0].name
+              port {
+                number = 80
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

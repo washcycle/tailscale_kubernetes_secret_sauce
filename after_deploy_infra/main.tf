@@ -3,7 +3,7 @@ resource "kubernetes_manifest" "ts_proxies" {
     apiVersion = "tailscale.com/v1alpha1"
     kind       = "ProxyGroup"
     metadata = {
-      name = "herro-yuy-ts-egress-proxies"
+      name = "heero-yuy-ts-egress-proxies"
     }
     spec = {
       type     = "egress"
